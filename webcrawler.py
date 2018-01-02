@@ -27,5 +27,38 @@ def print_links(page):
 		else:
 			break 
 
+index = []
 
-print_links(str(get_page('https://xkcd.com/')))
+def add_to_index (index, keyword, url):
+	for entry in index:
+		if entry[0]==keyword:
+				entry[1].append(url)
+			return
+	index.append([keyword,[url]])	#if no matching entry found; add new entry
+
+def lookup(index, keyword):
+	for entry in index:
+		if entry[0]==keyword:
+			return entry[1]
+	return []	#if no url is found
+
+def add_page_to_index (index, url, content)
+	words = content.split()
+	for word in words:
+		add_to_index(index, word, url)
+
+def crawl(seed):
+	tocrawl =[seed]
+	crawled=[]
+	index=[]
+	while tocrawl:
+		page =tocrawl.pop()
+		if page not in crawled:
+			content=get_page(page)
+			add_page_to_index(index, page, content)
+			union(tocrawl, get_links(context))
+			crawled.append(page)
+	return index
+	
+print_links(str(get_page('url')))
+
