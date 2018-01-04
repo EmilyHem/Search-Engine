@@ -1,4 +1,4 @@
-def get_page(url): 
+def get_page(url):							 #gets html source of a webpage
 	try: 
 		from urllib.request import urlopen
 		f = urlopen(url)
@@ -7,9 +7,9 @@ def get_page(url):
 	except: 
 		return " "
 
-def get_links(page):
+def get_links(page): 							#gets the links on a given page 
 	start_link = page.find('<a href=')
-	if start_link == -1:	 #if there are no links
+	if start_link == -1:						#if there are no links
 		url = None
 		end_quote = 0
 		return url, end_quote
@@ -18,7 +18,7 @@ def get_links(page):
 	url = page[start_quote+1 : end_quote]
 	return url, end_quote
 
-def print_links(page):
+def print_links(page):							#prints the links on a given page
 	while True:
 		url, endpos = get_links(page)
 		if url:
@@ -29,25 +29,25 @@ def print_links(page):
 
 index = []
 
-def add_to_index (index, keyword, url):
-	for entry in index:
+def add_to_index (index, keyword, url): 				#adds url to index corresponding to a keyword	
+	for entry in index:						#if there is an existing keyword entry add as an additional url 
 		if entry[0]==keyword:
-				entry[1].append(url)
+			entry[1].append(url)
 			return
-	index.append([keyword,[url]])	#if no matching entry found; add new entry
+	index.append([keyword,[url]])					#if no matching entry found; create new entry
 
-def lookup(index, keyword):
+def lookup(index, keyword):						#look ups keyword in index and returns corresponding urls 
 	for entry in index:
 		if entry[0]==keyword:
 			return entry[1]
-	return []	#if no url is found
+	return []							#if no url is found return an empty array
 
-def add_page_to_index (index, url, content)
+def add_page_to_index (index, url, content):				#splits content into an array of words
 	words = content.split()
 	for word in words:
-		add_to_index(index, word, url)
+		add_to_index(index, word, url)				
 
-def crawl(seed):
+def crawl(seed):							#crawls the web given a seed webpage
 	tocrawl =[seed]
 	crawled=[]
 	index=[]
